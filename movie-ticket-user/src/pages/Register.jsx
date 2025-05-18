@@ -76,7 +76,15 @@ const Register = () => {
         console.log("registerButtonClickHandler()");
 
         registerUser(userInfo)
-            .then(r => console.log("connection Success"))
+            .then(r => {
+                if (r.data === 1) {
+                    alert('회원가입에 성공했습니다.');
+                    window.location.href = "/";
+                } else {
+                    alert('회원가입 요청 중 오류가 발생했습니다.');
+                    window.location.href = "/";
+                }
+            })
             .catch((err) => console.log("connection failure"));
 
     }
