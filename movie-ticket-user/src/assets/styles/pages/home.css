@@ -1,0 +1,250 @@
+#article_wrap {
+    width: 100%;
+    height: 600px;
+    background-color: #000;
+}
+
+.main_img {
+    width: 1300px;
+    height: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+.title{
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    color: white;
+    z-index: 10;
+}
+.title strong{
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    display: block;
+    text-shadow: 2px 1px 1px rgba(0,0,0,0.7);
+}
+.title p{
+    font-weight: 700;
+    font-size:1.2em;
+    line-height: 30px;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mask-image: linear-gradient(to right, rgba(0,0,0,0) 5%, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.9) 80%, rgba(0,0,0,0) 95%);
+    z-index: 5;
+}
+#article_wrap2 {
+    width: 100%;
+    height: 450px;
+    background-color: rgba(102, 102, 102, 0.1);
+    overflow:hidden;
+}
+.list{
+    width:950px;
+    height:450px;
+    margin: 0 auto;
+}
+.list h2{
+    padding-top:50px;
+    margin-bottom:30px;
+    display: inline-block;
+    margin-right:10px;
+}
+
+.movie_list ul li{
+    float:left;
+    margin:0 10px;
+    position: relative;
+}
+.rank_list ul li{
+    float:left;
+    margin: 0 10px;
+}
+.rank_list .img{
+    width:170px;
+    height:234px;
+    background-color: #000;
+    border-radius: 10px;
+}
+.movie_list img,
+.rank_list img{
+    width:170px;
+    height:234px;
+    border-radius: 10px;
+}
+
+.movie_list p,
+.rank_list p{
+    width:170px;
+    text-align: center;
+    font-size: 16px;
+    margin-top:15px;
+    font-weight:bold;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 170px;
+    font-family: "Noto Sans KR", sans-serif;
+}
+.movie_rank{
+    color:#fff;
+    font-size: 3em;
+    font-style: italic;
+    position: absolute;
+    bottom:10%;
+    left:5%;
+    text-align: left;
+    font-weight: 600;
+}
+.rank-high{
+    left:2%
+}
+#movie_list, #rank_list{
+    display: none;
+}
+#movie_list.active, #rank_list.active {
+    display: block;
+}
+.custom-prev {
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    border: none;
+    color: white;
+    font-size: 18px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    opacity: 0.75;
+    transition: background-color 0.3s, opacity 0.3s;
+    position: absolute;
+    left: 0%;
+    top: 45%;
+    transform: translateY(-50%);
+    z-index:9999
+
+}
+
+.custom-prev::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid white;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.custom-next {
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    border: none;
+    color: white;
+    font-size: 18px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    opacity: 0.75;
+    transition: background-color 0.3s, opacity 0.3s;
+    position: absolute;
+    right: 0%;
+    top: 45%;
+    transform: translateY(-50%);
+}
+
+.custom-next::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid white;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#movie_chart_btn, #rank_list_btn {
+    cursor: pointer;
+    color: #666;
+}
+
+.active-btn {
+    color: black !important;
+}
+
+.active {
+    display: block;
+}
+
+#article_wrap3 {
+    width: 100%;
+    height: 450px;
+    overflow:hidden;
+}
+.event{
+    width:950px;
+    height:450px;
+    margin: 0 auto;
+}
+.event h2{
+    padding-top:50px;
+    margin-bottom:30px;
+    display: inline-block;
+    margin-right:10px;
+}
+.event_list{
+    margin: 0 auto;
+}
+.event_list ul li{
+    float:left;
+    margin: 0 10px;
+}
+.event_list img{
+    width:295px;
+    height:200px;
+    border-radius: 10px;
+}
+.img_con {
+    width: 295px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+}
+
+.img_con img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.img_con:hover img {
+    transform: scale(1.1);
+}
+.event_title{
+    margin-top:10px;
+    margin-bottom:5px;
+    font-weight: bold;
+    color: #222;
+    font-family: "Noto Sans KR", sans-serif;
+
+}
+.event_day{
+    font-weight: bold;
+    color:#666;
+    font-size:0.95em;
+    font-family: "Noto Sans KR", sans-serif;
+}

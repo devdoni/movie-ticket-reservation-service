@@ -1,0 +1,26 @@
+.footer_wrap {
+    background-color: #222;
+    color: #999;
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.footer_wrap a {
+    color: #999;
+    text-decoration: none;
+    margin-right: 15px;
+    font-size: 12px;
+}
+
+.footer_wrap a:hover {
+    text-decoration: underline;
+}
+
+.copyright p {
+    margin: 5px 0;
+}
+
+.logged_in {
+    display: none;
+}

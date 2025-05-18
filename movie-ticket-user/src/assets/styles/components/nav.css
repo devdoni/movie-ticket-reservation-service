@@ -1,0 +1,29 @@
+#nav_wrap{
+    width:100%;
+    height: 60px;
+    border-top: 1px solid rgb(212, 212, 212, .6);
+    border-bottom: 1px solid rgb(212, 212, 212, .6);
+    box-sizing: border-box;
+}
+.nav_contents{
+    width:1100px;
+    margin: 0 auto;
+}
+.nav_contents li{
+    float:left;
+    line-height: 57px;
+    width:100px;
+}
+.nav_contents li a{
+    font-weight: bold;
+    font-size:1.2em;
+}
+.nav_contents .search{
+    float:right;
+    width :300px;
+    height:40px;
+    margin-top:10px;
+    border: 1px solid #f0f0f0;
+
+}
+input:focus {outline: none;}
