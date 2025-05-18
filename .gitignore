@@ -1,3 +1,22 @@
 # Node Modules 
 **/node_modules/
-./idea
+
+# Idea
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Gradle build
+.gradle/
+build/
+out/
+
+# Spring
+*.log
+*.class
+*.jar
+
+# 환경 설정
+*.env
+movie-ticket-api/src/main/resources/application.properties
