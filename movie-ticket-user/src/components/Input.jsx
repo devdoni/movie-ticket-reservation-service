@@ -13,7 +13,8 @@ const Input = ({
     onInput,
     maxLength,
     onBlur,
-    onClick
+    onClick,
+    ref
 }) => {
     return (
         <input
@@ -30,6 +31,7 @@ const Input = ({
             min={min}
             max={maxLength}
             onBlur={onBlur}
+            ref={ref}
         />
     );
 }

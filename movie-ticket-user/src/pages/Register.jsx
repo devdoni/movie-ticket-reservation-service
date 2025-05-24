@@ -1,12 +1,26 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 
 import "../assets/styles/pages/register.css";
 import Input from "../components/Input";
 import Span from "../components/Span";
 import { regexMap } from "../utils/validators";
 import {registerUser} from "../utils/api";
+import {useNavigate} from "react-router-dom"
+import USER_CODES from "../constants/user-status-codes.json";
 
 const Register = () => {
+
+    const navigate = useNavigate();
+
+    const inputRefs = useRef({
+        id: null,
+        pw: null,
+        nick: null,
+        mail: null,
+        phone: null,
+        age: null,
+        gender: null,
+    });
 
     const [userInfo, setUserInfo] = useState({
         u_id: "",
@@ -17,13 +31,15 @@ const Register = () => {
         u_mail: "",
         u_phone: ""
     });
+
     const [errors, setErrors] = useState({
         id_err: "",
         pw_err: "",
         nick_err: ""
     });
 
-    // 폼의 데이터 체인지 핸들러
+
+    // 폼 체인지 핸들러
     const formChangeHandler = (e) => {
         console.log("formChangeHandler()");
 
@@ -72,22 +88,68 @@ const Register = () => {
     };
 
 
-    const registerButtonClickHandler = () => {
-        console.log("registerButtonClickHandler()");
+    const sendUserInfoByAxios = (validatedUserInfo) => {
+        console.log("sendUserInfoByAxios()");
 
-        registerUser(userInfo)
+        registerUser(validatedUserInfo)
             .then(r => {
-                if (r.data === 1) {
-                    alert('회원가입에 성공했습니다.');
-                    window.location.href = "/";
+                let result = r.data.data ?? null;
+                if (result === USER_CODES.USER_INSERT_SUCCESS) {
+                    alert('회원가입이 완료되었습니다.');
+                    navigate("/");
+
+                } else if (result === USER_CODES.USER_ID_ALREADY_EXIST) {
+                    alert('중복된 아이디입니다.');
+                    inputRefs.current.id.focus();
+
                 } else {
-                    alert('회원가입 요청 중 오류가 발생했습니다.');
-                    window.location.href = "/";
+                    alert('알 수 없는 오류입니다.');
                 }
             })
-            .catch((err) => console.log("connection failure"));
+            .catch((err) => {
+                console.log("connection failure");
 
-    }
+                alert('죄송합니다. 서버와 통신중 오류가 발생했습니다.');
+            });
+
+    };
+
+    const formValidateHandler = () => {
+        console.log("formValidateHandler()");
+
+        if (userInfo.u_id === "") {
+            alert('아이디가 정상적으로 입력되지 않았습니다.');
+            inputRefs.current.id.focus();
+
+        } else if (userInfo.u_pw === "") {
+            alert('비밀번호가 정상적으로 입력되지 않았습니다.');
+            inputRefs.current.pw.focus();
+
+        } else if (userInfo.u_nick === "") {
+            alert('닉네임이 정상적으로 입력되지 않았습니다.');
+            inputRefs.current.nick.focus();
+
+        } else if (userInfo.u_age === "") {
+            alert('연령대가 정상적으로 입력되지 않았습니다.');
+            inputRefs.current.age.focus();
+
+        } else if (userInfo.u_gender === "") {
+            alert('성별이 정상적으로 입력되지 않았습니다.');
+            inputRefs.current.gender.focus();
+
+        } else if (userInfo.u_mail === "") {
+            alert('메일이 정상적으로 입력되지 않았습니다.');
+            inputRefs.current.mail.focus();
+
+        } else if (userInfo.u_phone === "") {
+            alert('연락처가 정상적으로 입력되지 않았습니다.');
+            inputRefs.current.phone.focus();
+
+        } else {
+            sendUserInfoByAxios(userInfo);
+        }
+    };
+
     return (
         <>
             <section>
@@ -102,6 +164,7 @@ const Register = () => {
                                    name="u_id"
                                    onChange={formChangeHandler}
                                    onBlur={() => validateUser("id")}
+                                   ref={el => inputRefs.current.id = el}
                             />
                             <Span
                                 id="idError"
@@ -117,6 +180,7 @@ const Register = () => {
                                 name="u_pw"
                                 onChange={formChangeHandler}
                                 onBlur={() => validateUser("pw")}
+                                ref={el => inputRefs.current.pw = el}
                             />
                             <Span
                                 id="pwError"
@@ -132,6 +196,7 @@ const Register = () => {
                                 name="u_nick"
                                 onChange={formChangeHandler}
                                 onBlur={() => validateUser("nick")}
+                                ref={el => inputRefs.current.nick = el}
                             />
                             <Span
                                 id="nickError"
@@ -145,6 +210,7 @@ const Register = () => {
                             <select
                                 name="u_age"
                                 onChange={formChangeHandler}
+                                ref={el => inputRefs.current.age = el}
                             >
                                 <option value="">연령대를 선택하세요</option>
                                 <option value="10대">10대</option>
@@ -162,6 +228,7 @@ const Register = () => {
                             <select
                                 name="u_gender"
                                 onChange={formChangeHandler}
+                                ref={el => inputRefs.current.gender = el}
                             >
                                 <option value="">성별을 선택하세요</option>
                                 <option value="M">남성</option>
@@ -174,6 +241,7 @@ const Register = () => {
                                 type="email"
                                 name="u_mail"
                                 onChange={formChangeHandler}
+                                ref={el => inputRefs.current.mail = el}
                                 className="mail"/>
                             <br/>
 
@@ -183,6 +251,7 @@ const Register = () => {
                                 name="u_phone"
                                 value={userInfo.u_phone}
                                 onChange={formChangeHandler}
+                                ref={el => inputRefs.current.phone = el}
                                 maxLength="13"/>
                             <br/>
 
@@ -190,7 +259,7 @@ const Register = () => {
                                 className="join_btn"
                                 type="button"
                                 value="회원가입"
-                                onClick={registerButtonClickHandler}/>
+                                onClick={formValidateHandler}/>
                         </form>
                     </div>
                 </div>

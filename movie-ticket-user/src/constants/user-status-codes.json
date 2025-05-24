@@ -1,0 +1,6 @@
+{
+  "UNKNOWN_ERROR": -2,
+  "DB_ERROR": -1,
+  "USER_ID_ALREADY_EXIST": 0,
+  "USER_INSERT_SUCCESS": 1
+}

@@ -1,7 +1,13 @@
 package com.movie.movieticketapi.User;
 
-import com.movie.movieticketapi.dtos.UserDto;
+import com.movie.movieticketapi.common.constant.UserConstants;
+import com.movie.movieticketapi.dto.ApiResponse;
+import com.movie.movieticketapi.dto.RegisterUserDto;
+import com.movie.movieticketapi.dto.UserDto;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,19 +24,31 @@ public class UserController {
         this.userService = userService;
     }
 
+    // 유저 회원가입 요청
     @PostMapping("/register")
-    public Object registerUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserDto registerUserDto) {
         log.info("registerUser()");
-        int result = -1;
 
-        log.info("UserDto: {}", userDto);
+        int result = userService.registeringUser(registerUserDto);
 
-        if (userDto != null) {
-            result = userService.registeringUser(userDto);
-            log.info("result : {}", result);
+        if (result == UserConstants.USER_INSERT_SUCCESS) {
+            return ResponseEntity.ok(new ApiResponse<>(true, "회원가입 성공", result));
+
+        } else if (result == UserConstants.USER_ID_ALREADY_EXIST) {
+
+            return ResponseEntity.ok(new ApiResponse<>(false, "존재하는 아이디", result));
+
+        } else if (result == UserConstants.DB_ERROR) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(false, "서버 오류", result));
+        } else if (result == UserConstants.UNKNOWN_ERROR) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse<>(false, "알 수 없는 오류", result));
         }
 
-        return result;
+        return ResponseEntity.ok(result);
     }
 
 }

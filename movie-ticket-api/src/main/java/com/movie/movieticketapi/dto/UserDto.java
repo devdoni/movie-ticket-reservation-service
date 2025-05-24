@@ -1,4 +1,4 @@
-package com.movie.movieticketapi.dtos;
+package com.movie.movieticketapi.dto;
 
 import lombok.Data;
 
