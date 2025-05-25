@@ -1,5 +1,7 @@
 package com.movie.movieticketapi.common.exception;
 
+import com.movie.movieticketapi.common.constant.UserConstants;
+import com.movie.movieticketapi.dto.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,7 +20,8 @@ public class GlobalExceptionHandler {
                 .stream()
                 .map(err -> err.getField() + ": " + err.getDefaultMessage())
                 .collect(Collectors.toList());
+        ApiResponse<?> response = new ApiResponse<>(false, "Validation Error", UserConstants.USER_VALIDATE_FAIL, errors);
 
-        return ResponseEntity.badRequest().body(errors);
+        return ResponseEntity.badRequest().body(response);
     }
 };

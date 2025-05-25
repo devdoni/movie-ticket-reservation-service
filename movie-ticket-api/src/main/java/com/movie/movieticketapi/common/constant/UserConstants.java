@@ -12,5 +12,8 @@ public class UserConstants {
     public static final int USER_INSERT_SUCCESS = 1;
     // 검증 오류
     public static final int USER_VALIDATE_FAIL = 2;
-
+    // 로그인 실패
+    public static final int USER_LOGIN_FAIL = 3;
+    // 로그인 성공
+    public static final int USER_LOGIN_SUCCESS = 4;
 }

@@ -2,6 +2,7 @@ package com.movie.movieticketapi.User;
 
 import com.movie.movieticketapi.common.constant.UserConstants;
 import com.movie.movieticketapi.dto.ApiResponse;
+import com.movie.movieticketapi.dto.LoginUserDto;
 import com.movie.movieticketapi.dto.RegisterUserDto;
 import com.movie.movieticketapi.dto.UserDto;
 import jakarta.validation.Valid;
@@ -32,20 +33,45 @@ public class UserController {
         int result = userService.registeringUser(registerUserDto);
 
         if (result == UserConstants.USER_INSERT_SUCCESS) {
-            return ResponseEntity.ok(new ApiResponse<>(true, "회원가입 성공", result));
+            return ResponseEntity.ok(new ApiResponse<>(true, "회원가입 성공", result, null));
 
         } else if (result == UserConstants.USER_ID_ALREADY_EXIST) {
 
-            return ResponseEntity.ok(new ApiResponse<>(false, "존재하는 아이디", result));
+            return ResponseEntity.ok(new ApiResponse<>(false, "존재하는 아이디", result, null));
 
         } else if (result == UserConstants.DB_ERROR) {
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(false, "서버 오류", result));
+                    .body(new ApiResponse<>(false, "서버 오류", result, null));
+
         } else if (result == UserConstants.UNKNOWN_ERROR) {
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ApiResponse<>(false, "알 수 없는 오류", result));
+                    .body(new ApiResponse<>(false, "알 수 없는 오류", result, null));
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
+    // 유저 로그인 요청
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@Valid @RequestBody LoginUserDto loginUserDto) {
+        log.info("loginUser()");
+
+        int result = userService.userLoginService(loginUserDto);
+        if (result == UserConstants.USER_LOGIN_SUCCESS) {
+            return ResponseEntity.ok(new ApiResponse<>(true, "로그인 성공", result, null));
+
+        } else if (result == UserConstants.USER_LOGIN_FAIL) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "로그인 실패", result, null));
+
+        } else if (result == UserConstants.DB_ERROR) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse<>(false, "DB 오류", result, null));
+
+
+        } else if (result == UserConstants.UNKNOWN_ERROR) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, "알 수 없는 오류", result, null));
+
         }
 
         return ResponseEntity.ok(result);

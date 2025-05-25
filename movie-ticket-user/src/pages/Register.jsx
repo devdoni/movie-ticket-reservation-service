@@ -10,8 +10,10 @@ import USER_CODES from "../constants/user-status-codes.json";
 
 const Register = () => {
 
+    // 페이지 이동을 위한 navigate
     const navigate = useNavigate();
 
+    // Focus 를 위한 Ref
     const inputRefs = useRef({
         id: null,
         pw: null,
@@ -22,6 +24,7 @@ const Register = () => {
         gender: null,
     });
 
+    // 유저가 입력한 정보를 담는 State
     const [userInfo, setUserInfo] = useState({
         u_id: "",
         u_pw: "",
@@ -32,6 +35,7 @@ const Register = () => {
         u_phone: ""
     });
 
+    // 아이디, 패스워드, 닉네임 검증 오류를 담는 State
     const [errors, setErrors] = useState({
         id_err: "",
         pw_err: "",
@@ -56,7 +60,7 @@ const Register = () => {
         }));
     };
 
-    // 아이디 유효성 검사 (20자 이내, 영문자+숫자 조합)
+    // ID, PW, NICK 검증
     const validateUser = (type) => {
         console.log("validateUser()");
         const regex = regexMap[type];
@@ -88,32 +92,46 @@ const Register = () => {
     };
 
 
+    // 서버로 유저가 입력한 정보 전송 By Axios
     const sendUserInfoByAxios = (validatedUserInfo) => {
         console.log("sendUserInfoByAxios()");
 
         registerUser(validatedUserInfo)
             .then(r => {
                 let result = r.data.data ?? null;
+                // 가입 성공
                 if (result === USER_CODES.USER_INSERT_SUCCESS) {
                     alert('회원가입이 완료되었습니다.');
                     navigate("/");
-
+                // 중복된 아이디
                 } else if (result === USER_CODES.USER_ID_ALREADY_EXIST) {
                     alert('중복된 아이디입니다.');
                     inputRefs.current.id.focus();
-
+                // 알 수 없는 오류시
                 } else {
                     alert('알 수 없는 오류입니다.');
+
                 }
             })
             .catch((err) => {
-                console.log("connection failure");
+                let res = err.response.data ?? null;
+                // 서버에서 Validate 실패 시
+                if (res.data === USER_CODES.USER_VALIDATE_FAIL) {
+                    alert('올바르지 않은 형식이 제출되었습니다.');
+                    console.error(res.error);
+                    // DB 서버 에러 시
+                } else if (res.data === USER_CODES.DB_ERROR) {
+                    alert('죄송합니다. 요청 중 서버에 오류가 발생했습니다.');
+                    // 알 수 없는 에러 시
+                } else {
+                    alert('죄송합니다. 알 수 없는 오류가 발생했습니다.');
 
-                alert('죄송합니다. 서버와 통신중 오류가 발생했습니다.');
+                }
             });
 
     };
 
+    // 폼 데이터 검증 핸들러
     const formValidateHandler = () => {
         console.log("formValidateHandler()");
 
@@ -144,6 +162,9 @@ const Register = () => {
         } else if (userInfo.u_phone === "") {
             alert('연락처가 정상적으로 입력되지 않았습니다.');
             inputRefs.current.phone.focus();
+
+        } else if (errors.nick_err || errors.pw_err || errors.nick_err) {
+            alert('입력된 정보를 다시 한번 확인해주세요.');
 
         } else {
             sendUserInfoByAxios(userInfo);
