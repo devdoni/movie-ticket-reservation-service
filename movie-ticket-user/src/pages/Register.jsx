@@ -99,18 +99,13 @@ const Register = () => {
         registerUser(validatedUserInfo)
             .then(r => {
                 let result = r.data.data ?? null;
-                // 가입 성공
-                if (result === USER_CODES.USER_INSERT_SUCCESS) {
-                    alert('회원가입이 완료되었습니다.');
-                    navigate("/");
-                // 중복된 아이디
-                } else if (result === USER_CODES.USER_ID_ALREADY_EXIST) {
+
+                if (result === USER_CODES.USER_ID_ALREADY_EXIST) {
                     alert('중복된 아이디입니다.');
                     inputRefs.current.id.focus();
-                // 알 수 없는 오류시
                 } else {
-                    alert('알 수 없는 오류입니다.');
-
+                    alert('회원가입이 완료되었습니다.');
+                    navigate("/");
                 }
             })
             .catch((err) => {

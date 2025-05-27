@@ -1,13 +1,18 @@
 package com.movie.movieticketapi.User;
 
 import com.movie.movieticketapi.common.constant.UserConstants;
+import com.movie.movieticketapi.common.utils.JwtUtil;
+import com.movie.movieticketapi.dto.LoginResponse;
 import com.movie.movieticketapi.dto.LoginUserDto;
 import com.movie.movieticketapi.dto.RegisterUserDto;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Log4j2
 @Service
@@ -15,10 +20,12 @@ public class UserService {
 
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserService(UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserMapper userMapper, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     // 유저 회원가입 처리 서비스
@@ -39,7 +46,7 @@ public class UserService {
 
             return userMapper.insertNewUser(registerUserDto);
         } catch (DataAccessException dae) {
-            log.error("DB 접근 중 오류 발생 : {}", dae.getMessage());
+            log.error("DB 접근 중 오류 발생 : {}", dae.getMessage(), dae);
             return UserConstants.DB_ERROR;
 
         } catch (Exception e) {
@@ -70,12 +77,20 @@ public class UserService {
             return UserConstants.USER_LOGIN_SUCCESS;
 
         } catch (DataAccessException dae) {
-            log.error("DB access error: {}", dae.getMessage());
+            log.error("DB access error: {}", dae.getMessage(), dae);
             return UserConstants.DB_ERROR;
 
         } catch (Exception e) {
             log.error("Unknown error occurred: {}", e.getMessage(), e);
             return UserConstants.UNKNOWN_ERROR;
         }
+    }
+
+    public LoginResponse generateToken(String u_id) {
+        log.info("generateToken()");
+
+        String token = jwtUtil.generateToken(u_id);
+
+        return new LoginResponse(token, u_id, List.of("USER"));
     }
 }

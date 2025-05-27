@@ -14,7 +14,8 @@ const Input = ({
     maxLength,
     onBlur,
     onClick,
-    ref
+    ref,
+    checked
 }) => {
     return (
         <input
@@ -32,6 +33,7 @@ const Input = ({
             max={maxLength}
             onBlur={onBlur}
             ref={ref}
+            checked={checked}
         />
     );
 }

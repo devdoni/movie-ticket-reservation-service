@@ -16,4 +16,10 @@ public class UserConstants {
     public static final int USER_LOGIN_FAIL = 3;
     // 로그인 성공
     public static final int USER_LOGIN_SUCCESS = 4;
+    // 토큰 발급 실패
+    public static final int UNAUTHORIZED_ERROR = 5;
+    // 로그인 성공
+    public static final int USER_LOGOUT_SUCCESS = 6;
+    // 로그인 실패
+    public static final int USER_LOGOUT_FAIL = 7;
 }

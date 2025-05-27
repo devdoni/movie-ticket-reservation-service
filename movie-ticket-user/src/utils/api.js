@@ -5,3 +5,21 @@ export const registerUser = (data) => {
 
     return axiosInstance.post(`/user/register`, data);
 }
+
+export const loginUser = (data) => {
+    console.log("loginUser()");
+
+    return axiosInstance.post(`/user/login`, data);
+}
+
+export const authenticateUser = () => {
+    console.log("authenticateUser()");
+
+    return axiosInstance.get(`/auth/me`, { withCredentials: true });
+}
+
+export const logoutUser = () => {
+    console.log("logoutUser()");
+
+    return axiosInstance.post(`/user/logout`, { withCredentials: true });
+}

@@ -1,11 +1,9 @@
 import React from "react";
-import Header from "../components/Header";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
 
 import "../assets/styles/pages/home.css";
 
 const Home = () => {
+
 
 
     return (
@@ -61,7 +59,9 @@ const Home = () => {
                                 <li>
                                     <div className="img_con">
                                         <a href="#none"><img
-                                            src="https://img.cgv.co.kr/WebApp/contents/eventV4/41996/17267128069630.jpg"/></a>
+                                            src="https://img.cgv.co.kr/WebApp/contents/eventV4/41996/17267128069630.jpg"
+                                            alt="포스터1"
+                                        /></a>
                                     </div>
                                     <p className="event_title">트랜스포머 ONE_4DX 포스터</p>
                                     <p className="event_day">2024.09.19 ~ 2024.09.30</p>
@@ -71,7 +71,9 @@ const Home = () => {
                                 <li>
                                     <div className="img_con">
                                         <a href="#none"><img
-                                            src="https://img.cgv.co.kr/WebApp/contents/eventV4/41995/17267279346770.jpg"/></a>
+                                            src="https://img.cgv.co.kr/WebApp/contents/eventV4/41995/17267279346770.jpg"
+                                            alt="포스터2"
+                                        /></a>
                                     </div>
                                     <p className="event_title">트랜스포머 ONE_IMAX 포스터</p>
                                     <p className="event_day">2024.09.19 ~ 2024.09.30</p>
@@ -81,7 +83,9 @@ const Home = () => {
                                 <li>
                                     <div className="img_con">
                                         <a href="#none"><img
-                                            src="https://img.cgv.co.kr/WebApp/contents/eventV4/41993/17267090982490.jpg"/></a>
+                                            src="https://img.cgv.co.kr/WebApp/contents/eventV4/41993/17267090982490.jpg"
+                                            alt="포스터3"
+                                        /></a>
                                     </div>
                                     <p className="event_title">서프라이즈 온리 5천원[브레드 이발소]</p>
                                     <p className="event_day">2024.09.19 ~ 2024.10.31</p>
